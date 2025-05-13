@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Clínicas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --cor-vermelho: #FF6052;
+            --cor-azul: #003EA6;
+        }
+    </style>
+</head>
+<body class="p-6 bg-gray-100 min-h-screen">
+<div th:insert="~{fragments/header :: header}">
+    MENU NO HEADER
+</div>
+
+<div class="max-w-6xl mx-auto mt-10 bg-white p-6 rounded-xl shadow-md border border-gray-200">
+    <h1 th:text="#{clinicas.title}" class="text-2xl font-extrabold text-center mb-6" style="color: var(--cor-azul);">
+        Lista de Clínicas</h1>
+
+    <div class="text-center mb-4">
+        <a th:text="#{clinicas.new}" th:href="@{/clinicas/novo}"
+           class="inline-block bg-[color:var(--cor-azul)] text-white px-4 py-2 rounded-lg shadow hover:brightness-110 transition-all">
+            Nova Clínica
+        </a>
+    </div>
+
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white border border-gray-300 rounded-lg overflow-hidden shadow-sm">
+            <thead>
+            <tr class="bg-[color:var(--cor-vermelho)] text-white text-sm uppercase">
+                <th class="p-3 text-left">ID</th>
+                <th class="p-3 text-left">CNPJ</th>
+                <th th:text="#{name.form}" class="p-3 text-left">Nome</th>
+                <th class="p-3 text-left">Email</th>
+                <th th:text="#{enderecos.text}" class="p-3 text-left">Endereço</th>
+                <th th:text="#{telefone.text}" class="p-3 text-left">Telefone</th>
+                <th th:text="#{actions.table}" class="p-3 text-center">Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="border-t hover:bg-gray-50 transition" th:each="clinica : ${clinicas}">
+                <td class="p-3" th:text="${clinica.id}">1</td>
+                <td class="p-3" th:text="${clinica.cnpj}">00.000.000/0001-00</td>
+                <td class="p-3" th:text="${clinica.nome}">Clínica X</td>
+                <td class="p-3" th:text="${clinica.usuario.email}">email@clinica.com</td>
+                <td class="p-3"
+                    th:text="${clinica.endereco.rua + ' - ' + clinica.endereco.numero + '. ' + clinica.endereco.cidade + ', ' + clinica.endereco.estado + '. CEP: ' + clinica.endereco.cep}">
+                    Rua Exemplo - 123. Cidade, Estado. CEP: 00000-000
+                </td>
+                <td class="p-3" th:text="${clinica.telefone.numero}">(00) 00000-0000</td>
+                <td class="p-3 text-center">
+                    <div class="flex justify-center gap-4">
+                        <a th:href="@{/clinicas/editar/{id}(id=${clinica.id})}"
+                           class="text-blue-600 hover:text-blue-800 transition" title="Editar">
+                            <i data-lucide="pencil" class="w-5 h-5"></i>
+                        </a>
+                        <a th:href="@{/clinicas/deletar/{id}(id=${clinica.id})}"
+                           class="text-red-500 hover:text-red-700 transition" title="Deletar">
+                            <i data-lucide="trash-2" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    lucide.createIcons();
+</script>
+</body>
+</html>

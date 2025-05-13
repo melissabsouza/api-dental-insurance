@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Telefones</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex justify-center items-center h-screen m-10">
+
+<div class="bg-white p-8 rounded-lg border-4 border-gray-300 w-full max-w-lg h-90">
+
+    <div class="flex flex-col justify-center items-center ">
+        <h2 class="text-xl font-black text-black text-center mb-4">Cadastro de Telefones</h2>
+        <a class="text-black mb-4" th:href="@{/telefones}">Lista de Telefones </a>
+
+
+    </div>
+
+    <div class="flex items-center">
+        <form th:action="@{/telefones}" method="post" th:object="${telefone}">
+
+            <input type="hidden" th:field="*{id}">
+
+            <label class="block text-black font-medium mb-2" for="numero">Número</label>
+            <input class="w-96 p-3 border border-gray-300 rounded-lg" th:field="*{numero}" type="text" id="numero"
+                   name="numero" placeholder="XX XXXX-XXXX">
+            <li th:each="err : ${#fields.errors('numero')}" th:text="${err}">ERRO</li>
+
+
+            <select required
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    id="tipo" name="tipo">
+                <option value="">Selecione...</option>
+                <option value="RESIDENCIAL">Residencial</option>
+                <option value="CELULAR">Celular</option>
+                <option value="COMERCIAL">Comercial</option>
+            </select>
+            <li th:each="err : ${#fields.errors('tipo')}" th:text="${err}" class="bg-red-100 font-bold">ERRO</li>
+
+
+            <div class="flex justify-center items-center">
+                <button class="mt-3 bg-violet-600 text-white rounded px-10 py-2 hover:bg-violet-300" type="submit">
+                    Salvar
+                </button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+</body>
+</html>

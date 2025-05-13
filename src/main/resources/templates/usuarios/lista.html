@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de usuarios</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="p-6">
+<div th:insert="~{fragments/header :: header}">
+    MENU NO HEADER
+</div>
+<div>
+    <h1 class="text-xl font-black text-black text-center mb-4">Lista de usuarios</h1>
+
+    <div class="text-center mt-8">
+        <a class="text-black mb-4" th:href="@{/usuarios/novo}">Novo usuário</a>
+    </div>
+
+    <div class="p-6">
+        <table class="w-full border-collapse">
+            <thead>
+            <tr class="bg-violet-600 text-white">
+                <th class="p-3 text-left">ID</th>
+                <th class="p-3 text-left">Email</th>
+                <th class="p-3 text-left">Senha</th>
+                <th class="p-3 text-left">Status</th>
+                <th class="p-3 text-left">Ações</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr class="border-b" th:each="usuario : ${usuarios}">
+                <td class="p-3 text-gray" th:text="${usuario.id}">id</td>
+                <td class="p-3" th:text="${usuario.email}">email</td>
+                <td class="p-3" th:text="${usuario.senha}">senha</td>
+                <td class="p-3" th:text="${usuario.status}">status</td>
+
+                <td class="p-3">
+                    <a class="text-blue-600 hover:underline"
+                       th:href="@{/usuarios/editar/{id}(id=${usuario.id})}">Editar</a>
+                    <a class="text-blue-600 hover:underline" th:href="@{/usuarios/deletar/{id}(id=${usuario.id})}">Deletar</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>

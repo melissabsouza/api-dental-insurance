@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Dentistas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        :root {
+            --cor-vermelho: #FF6052;
+            --cor-azul: #003EA6;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center min-h-screen bg-gray-100 p-10">
+
+<div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-300 w-full max-w-4xl">
+    <div class="flex flex-col items-center mb-6">
+        <h2 th:text="#{dentistas.title}" class="text-2xl font-extrabold mb-2" style="color: var(--cor-azul);">Cadastro
+            de Dentistas</h2>
+        <a class="text-sm hover:underline flex items-center gap-1" style="color: var(--cor-azul);"
+           th:href="@{/dentistas}">
+            <svg th:text="#{dentistas.list}" class="w-4 h-4" stroke="currentColor" fill="none" stroke-width="2"
+                 viewBox="0 0 24 24">
+                <path d="M3 12h18M3 6h18M3 18h18"/>
+            </svg>
+            Lista de Dentistas
+        </a>
+    </div>
+
+    <form th:action="@{/dentistas}" method="post" th:object="${dentista}" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <input type="hidden" th:field="*{id}">
+        <input type="hidden" th:field="*{endereco.id}">
+        <input type="hidden" th:field="*{telefone.id}">
+
+        <!-- Campo CPF -->
+        <div class="flex flex-col">
+            <label for="cpf" class="block font-medium">CPF</label>
+            <input type="text" id="cpf" th:field="*{cpf}" class="mt-1 w-full p-2 border rounded-lg border-gray-300"
+                   required/>
+            <li th:each="err : ${#fields.errors('cpf')}" th:text="${err}" class="text-red-500 text-sm mt-1"></li>
+
+        </div>
+
+        <!-- Campo Nome -->
+        <div class="flex flex-col">
+            <label th:text="#{name.form}" for="nome" class="block font-medium">Nome</label>
+            <input type="text" id="nome" th:field="*{nome}" class="mt-1 w-full p-2 border rounded-lg border-gray-300"
+                   required/>
+            <li th:each="err : ${#fields.errors('nome')}" th:text="${err}" class="text-red-500 text-sm mt-1"></li>
+
+        </div>
+
+        <!-- Campo CRO -->
+        <div class="flex flex-col">
+            <label for="cro" class="block font-medium">CRO</label>
+            <input type="text" id="cro" th:field="*{cro}" class="mt-1 w-full p-2 border rounded-lg border-gray-300"
+                   required/>
+            <li th:each="err : ${#fields.errors('cro')}" th:text="${err}" class="text-red-500 text-sm mt-1"></li>
+
+        </div>
+
+        <!-- Campo Especialidade -->
+        <div class="flex flex-col">
+            <label th:text="#{dentista.espec}" for="especialidade" class="block font-medium">Especialidade</label>
+            <input type="text" id="especialidade" th:field="*{especialidade}"
+                   class="mt-1 w-full p-2 border rounded-lg border-gray-300" required/>
+            <li th:each="err : ${#fields.errors('especialidade')}" th:text="${err}"
+                class="text-red-500 text-sm mt-1"></li>
+
+        </div>
+
+        <!-- Campo Email -->
+        <div class="flex flex-col">
+            <label for="email" class="block font-medium">Email</label>
+            <input type="email" id="email" th:field="*{email}" class="mt-1 w-full p-2 border rounded-lg border-gray-300"
+                   required/>
+            <li th:each="err : ${#fields.errors('email')}" th:text="${err}" class="text-red-500 text-sm mt-1"></li>
+
+        </div>
+
+        <!-- Campo Data de Contratação -->
+        <div class="flex flex-col">
+            <label th:text="#{dentista.datacont}" for="dataContratacao" class="block font-medium">Data de
+                Contratação</label>
+            <input type="date" id="dataContratacao" th:field="*{dataContratacao}"
+                   class="mt-1 w-full p-2 border rounded-lg border-gray-300" required/>
+            <li th:each="err : ${#fields.errors('dataContratacao')}" th:text="${err}"
+                class="text-red-500 text-sm mt-1"></li>
+
+        </div>
+
+        <!-- Campo Clinica -->
+        <div class="flex flex-col">
+            <label th:text="#{clinica.cnpj}" for="clinicaCnpj" class="block font-medium">Clinica (CNPJ)</label>
+            <input type="text" id="clinicaCnpj" th:field="*{clinicaCnpj}"
+                   class="mt-1 w-full p-2 border rounded-lg border-gray-300" required/>
+            <li th:each="err : ${#fields.errors('clinicaCnpj')}" th:text="${err}"
+                class="text-red-500 text-sm mt-1"></li>
+
+        </div>
+
+        <!-- Endereço -->
+        <div class="col-span-2">
+            <h3 class="text-xl font-semibold mb-4">Endereço</h3>
+
+            <div class="flex flex-col">
+                <label th:text="#{enderecos.rua}" for="rua" class="block font-medium">Rua</label>
+                <input type="text" id="rua" th:field="*{endereco.rua}"
+                       class="mt-1 w-full p-2 border rounded-lg border-gray-300" required/>
+                <li th:each="err : ${#fields.errors('endereco.rua')}" th:text="${err}"
+                    class="text-red-500 text-sm mt-1"></li>
+
+            </div>
+
+            <div class="flex flex-col">
+                <label th:text="#{enderecos.numero}" for="numero" class="block font-medium">Número</label>
+                <input type="text" id="numero" th:field="*{endereco.numero}"
+                       class="mt-1 w-full p-2 border rounded-lg border-gray-300" required/>
+                <li th:each="err : ${#fields.errors('endereco.numero')}" th:text="${err}"
+                    class="text-red-500 text-sm mt-1"></li>
+            </div>
+
+            <div class="flex flex-col">
+                <label th:text="#{enderecos.bairro}" for="bairro" class="block font-medium">Bairro</label>
+                <input type="text" id="bairro" th:field="*{endereco.bairro}"
+                       class="mt-1 w-full p-2 border rounded-lg border-gray-300" required/>
+                <li th:each="err : ${#fields.errors('endereco.bairro')}" th:text="${err}"
+                    class="text-red-500 text-sm mt-1"></li>
+
+            </div>
+
+            <div class="flex flex-col">
+                <label for="cep" class="block font-medium">CEP</label>
+                <input type="text" id="cep" th:field="*{endereco.cep}"
+                       class="mt-1 w-full p-2 border rounded-lg border-gray-300" required/>
+                <li th:each="err : ${#fields.errors('endereco.cep')}" th:text="${err}"
+                    class="text-red-500 text-sm mt-1"></li>
+
+            </div>
+
+            <div class="flex flex-col">
+                <label th:text="#{enderecos.cidade}" for="cidade" class="block font-medium">Cidade</label>
+                <input type="text" id="cidade" th:field="*{endereco.cidade}"
+                       class="mt-1 w-full p-2 border rounded-lg border-gray-300" required/>
+                <li th:each="err : ${#fields.errors('endereco.cidade')}" th:text="${err}"
+                    class="text-red-500 text-sm mt-1"></li>
+
+            </div>
+
+            <div class="flex flex-col">
+                <label th:text="#{enderecos.estado}" for="estado" class="block font-medium">Estado</label>
+                <input type="text" id="estado" th:field="*{endereco.estado}"
+                       class="mt-1 w-full p-2 border rounded-lg border-gray-300" required/>
+                <li th:each="err : ${#fields.errors('endereco.estado')}" th:text="${err}"
+                    class="text-red-500 text-sm mt-1"></li>
+            </div>
+
+            <div class="flex flex-col">
+                <label th:text="#{enderecos.complemento}" for="complemento"
+                       class="block font-medium">Complemento</label>
+                <input type="text" id="complemento" th:field="*{endereco.complemento}"
+                       class="mt-1 w-full p-2 border rounded-lg border-gray-300"/>
+                <li th:each="err : ${#fields.errors('endereco.complemento')}" th:text="${err}"
+                    class="text-red-500 text-sm mt-1"></li>
+            </div>
+        </div>
+
+        <!-- Telefone -->
+        <div class="col-span-2">
+            <h3 class="text-xl font-semibold mb-4">Telefone</h3>
+
+            <div class="flex flex-col">
+                <label th:text="#{telefone.tipo}" for="tipo" class="block font-medium">Tipo</label>
+                <select th:field="*{telefone.tipo}" class="mt-1 w-full p-2 border rounded-lg border-gray-300">
+                    <option th:value="null" disabled selected>Selecione o tipo</option>
+                    <option th:value="COMERCIAL">Comercial</option>
+                    <option th:value="RESIDENCIAL">Residencial</option>
+                    <option th:value="CELULAR">Celular</option>
+                </select>
+                <li th:each="err : ${#fields.errors('telefone.tipo')}" th:text="${err}"
+                    class="text-red-500 text-sm mt-1"></li>
+            </div>
+
+            <div class="flex flex-col">
+                <label th:text="#{enderecos.numero}" for="numeroTelefone" class="block font-medium">Número</label>
+                <input type="text" id="numeroTelefone" th:field="*{telefone.numero}"
+                       class="mt-1 w-full p-2 border rounded-lg border-gray-300" required/>
+                <li th:each="err : ${#fields.errors('telefone.numero')}" th:text="${err}"
+                    class="text-red-500 text-sm mt-1"></li>
+            </div>
+        </div>
+
+        <!-- Botão de Envio -->
+        <div class="flex justify-center mt-6 col-span-2">
+            <button th:text="#{save.button}" type="submit" class="px-6 py-2 rounded-lg text-white transition-colors"
+                    style="background-color: var(--cor-vermelho);">
+                Salvar
+            </button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

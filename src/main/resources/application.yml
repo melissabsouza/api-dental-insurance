@@ -1,0 +1,93 @@
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+      force-response: true
+      force-request: true
+
+#management:
+#  endpoints:
+#    health:
+#      show-details: always
+#    web:
+#      exposure:
+#        include: health,info,prometheus
+#      endpoint:
+#        prometheus:
+#          enabled: true
+
+spring:
+  #  security:
+  #    oauth2:
+  #      client:
+  #        provider:
+  #          petshop-realm:
+  #            issuer-uri: http://localhost:7080/realms/petshop-realm
+  #        registration:
+  #          keycloak:
+  #            provider: petshop-realm
+  #            authorization-grant-type: authorization_code
+  #            client-id: api-petshop
+  #            client-secret: JtAUnpNKlNMno50OlxqduRr8cGhGsOqY
+  #            scope: openid
+  #            #            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+  #            redirect-uri: "http://localhost:8080/login/oauth2/code/keycloak"
+  #      whitelist:
+  #        - /actuator/prometheus
+  application:
+    name: dental-insurance-api
+
+
+  thymeleaf:
+    encoding: UTF-8
+    cache: false
+
+  jpa:
+    open-in-view: true
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
+
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+    schema: classpath:schema.sql
+    data: classpath:data.sql
+
+  messages:
+    encoding: UTF-8
+    basename: messages
+
+  mvc:
+    locale: pt_BR
+    locale-resolver: session
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  devtools:
+    restart:
+      enabled: true
+  integration:
+    poller:
+      max-messages-per-poll:
+
+logging:
+  level:
+    root: INFO
+    br: DEBUG
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE

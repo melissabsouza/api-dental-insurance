@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de enderecos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="p-6">
+
+<div th:insert="~{fragments/header :: header}">
+    MENU NO HEADER
+</div>
+
+<div>
+    <h1 class="text-xl font-black text-black text-center mb-4">Lista de Endereços</h1>
+
+    <div class="text-center mt-8">
+        <a class="text-black mb-4" th:href="@{/enderecos/novo}">Novo endereço</a>
+    </div>
+
+    <div class="p-6">
+        <table class="w-full border-collapse">
+            <thead>
+            <tr class="bg-violet-600 text-white">
+                <th class="p-3 text-left">ID</th>
+                <th class="p-3 text-left">Rua</th>
+                <th class="p-3 text-left">Número</th>
+                <th class="p-3 text-left">Complemento</th>
+                <th class="p-3 text-left">Bairro</th>
+                <th class="p-3 text-left">Cidade</th>
+                <th class="p-3 text-left">Estado</th>
+                <th class="p-3 text-left">Cep</th>
+                <th class="p-3 text-left">Ações</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr class="border-b" th:each="endereco : ${enderecos}">
+                <td class="p-3 text-gray" th:text="${endereco.id}">id</td>
+                <td class="p-3" th:text="${endereco.rua}">rua</td>
+                <td class="p-3" th:text="${endereco.numero}">numero</td>
+                <td class="p-3" th:text="${endereco.complemento}">complemento</td>
+                <td class="p-3" th:text="${endereco.bairro}">bairro</td>
+                <td class="p-3" th:text="${endereco.cidade}">cidade</td>
+                <td class="p-3" th:text="${endereco.estado}">estado</td>
+                <td class="p-3" th:text="${endereco.cep}">cep</td>
+
+
+                <td class="p-3">
+                    <a class="text-blue-600 hover:underline"
+                       th:href="@{/templates/enderecos/editar/{id}(id=${endereco.id})}">Editar</a>
+                    <a class="text-blue-600 hover:underline"
+                       th:href="@{/templates/enderecos/deletar/{id}(id=${endereco.id})}">Deletar</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>

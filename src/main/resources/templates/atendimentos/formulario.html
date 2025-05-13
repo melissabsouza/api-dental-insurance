@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Atendimentos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --cor-vermelho: #FF6052;
+            --cor--azul: #003EA6;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center min-h-screen bg-gray-100 p-10">
+
+<div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-300 w-full max-w-2xl">
+
+    <div class="flex flex-col items-center">
+        <h2 th:text="#{atendimentos.title}" class="text-2xl font-extrabold mb-2" style="color: var(--cor--azul);">
+            Cadastro de Atendimento</h2>
+        <a class="text-sm hover:underline mb-6 flex items-center gap-1" style="color: var(--cor--azul);"
+           th:href="@{/atendimentos}">
+            <svg th:text="#{atendimentos.list}" class="w-4 h-4" stroke="currentColor" fill="none" stroke-width="2"
+                 viewBox="0 0 24 24">
+                <path d="M3 12h18M3 6h18M3 18h18"/>
+            </svg>
+            Lista de Atendimentos
+        </a>
+    </div>
+
+    <form th:action="@{/atendimentos}" method="post" th:object="${atendimento}" class="space-y-4">
+
+        <input type="hidden" th:field="*{id}"/>
+
+        <div>
+            <label th:text="#{atendimentos.type}" for="tipoProcedimento" class="block font-medium">Tipo do
+                Procedimento</label>
+            <input type="text" id="tipoProcedimento" th:field="*{tipoProcedimento}"
+                   class="mt-1 w-full p-2 border rounded-lg border-gray-300" required/>
+            <li th:each="err : ${#fields.errors('tipoProcedimento')}" th:text="${err}"
+                class="text-red-500 text-sm mt-1"></li>
+        </div>
+
+        <div>
+            <label th:text="#{atendimentos.description}" for="descricao" class="block font-medium">Descrição</label>
+            <input type="text" id="descricao" th:field="*{descricao}"
+                   class="mt-1 w-full p-2 border rounded-lg border-gray-300" required/>
+            <li th:each="err : ${#fields.errors('descricao')}" th:text="${err}" class="text-red-500 text-sm mt-1"></li>
+        </div>
+
+        <div>
+            <label th:text="#{atendimentos.data}" for="dataAtendimento" class="block font-medium">Data do
+                Atendimento</label>
+            <input type="datetime-local" id="dataAtendimento" th:field="*{dataAtendimento}"
+                   class="mt-1 w-full p-2 border rounded-lg border-gray-300" required/>
+            <li th:each="err : ${#fields.errors('dataAtendimento')}" th:text="${err}"
+                class="text-red-500 text-sm mt-1"></li>
+        </div>
+
+        <div>
+            <label th:text="#{atendimentos.cost}" for="custoEstimado" class="block font-medium">Custo Estimado</label>
+            <input type="number" id="custoEstimado" th:field="*{custoEstimado}"
+                   class="mt-1 w-full p-2 border rounded-lg border-gray-300" required/>
+            <li th:each="err : ${#fields.errors('custoEstimado')}" th:text="${err}"
+                class="text-red-500 text-sm mt-1"></li>
+        </div>
+
+        <div>
+            <label th:text="#{atendimentos.cpfdentist}" for="dentistaCpf" class="block font-medium">CPF do
+                Dentista</label>
+            <input type="text" id="dentistaCpf" th:field="*{dentistaCpf}"
+                   class="mt-1 w-full p-2 border rounded-lg border-gray-300" required/>
+            <li th:each="err : ${#fields.errors('dentistaCpf')}" th:text="${err}"
+                class="text-red-500 text-sm mt-1"></li>
+        </div>
+
+        <div>
+            <label th:text="#{atendimentos.cpfpacient}" for="pacienteCpf" class="block font-medium">CPF do
+                Paciente</label>
+            <input type="text" id="pacienteCpf" th:field="*{pacienteCpf}"
+                   class="mt-1 w-full p-2 border rounded-lg border-gray-300" required/>
+            <li th:each="err : ${#fields.errors('pacienteCpf')}" th:text="${err}"
+                class="text-red-500 text-sm mt-1"></li>
+        </div>
+
+        <div class="flex justify-end">
+            <button th:text="#{save.button}" type="submit" class="px-6 py-2 rounded-lg text-white transition-colors"
+                    style="background-color: var(--cor-vermelho);">
+                Salvar
+            </button>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    lucide.createIcons();
+</script>
+</body>
+</html>
