@@ -3,45 +3,23 @@ server:
   servlet:
     encoding:
       charset: UTF-8
-      force: true
       force-response: true
-      force-request: true
 
-#management:
-#  endpoints:
-#    health:
-#      show-details: always
-#    web:
-#      exposure:
-#        include: health,info,prometheus
-#      endpoint:
-#        prometheus:
-#          enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+    prometheus:
+      enabled: true
+    health:
+      show-details: always
 
 spring:
-  #  security:
-  #    oauth2:
-  #      client:
-  #        provider:
-  #          petshop-realm:
-  #            issuer-uri: http://localhost:7080/realms/petshop-realm
-  #        registration:
-  #          keycloak:
-  #            provider: petshop-realm
-  #            authorization-grant-type: authorization_code
-  #            client-id: api-petshop
-  #            client-secret: JtAUnpNKlNMno50OlxqduRr8cGhGsOqY
-  #            scope: openid
-  #            #            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
-  #            redirect-uri: "http://localhost:8080/login/oauth2/code/keycloak"
-  #      whitelist:
-  #        - /actuator/prometheus
   application:
     name: dental-insurance-api
 
-
   thymeleaf:
-    encoding: UTF-8
     cache: false
 
   jpa:
@@ -65,9 +43,6 @@ spring:
     encoding: UTF-8
     basename: messages
 
-  mvc:
-    locale: pt_BR
-    locale-resolver: session
   h2:
     console:
       enabled: true
@@ -76,9 +51,6 @@ spring:
   devtools:
     restart:
       enabled: true
-  integration:
-    poller:
-      max-messages-per-poll:
 
 logging:
   level:

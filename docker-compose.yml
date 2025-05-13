@@ -1,0 +1,60 @@
+services:
+  # keycloak_challenge:
+  #   image: quay.io/keycloak/keycloak:24.0
+  #   environment:
+  #     KC_HOSTNAME: localhost
+  #     KC_HOSTNAME_PORT: 7080
+  #     KC_HOSTNAME_STRICT_BACKCHANNEL: "true"
+  #     KEYCLOAK_ADMIN: admin
+  #     KEYCLOAK_ADMIN_PASSWORD: admin
+  #     KC_HEALTH_ENABLED: "true"
+  #     KC_LOG_LEVEL: info
+  #   healthcheck:
+  #     test: ["CMD", "curl", "-f", "http://localhost:7080/health/ready"]
+  #     interval: 15s
+  #     timeout: 2s
+  #     retries: 15
+  #   command: ["start-dev", "--http-port", "7080", "--https-port", "7443", "--import-realm"]
+  #   volumes:
+  #     - ./keycloak/realm-export.json:/opt/keycloak/data/import/realm-export.json
+  #   ports:
+  #     - "7080:7080"
+  #     - "7443:7443"
+  #   networks:
+  #     - local_network
+#  spring-app:
+#    build:
+#      context: .
+#      dockerfile: ./Dockerfile
+#    ports:
+#      - "8080:8080"
+#    networks:
+#      - monitoring
+#    depends_on:
+#      - keycloak_challenge
+#      - prometheus
+#      - grafana
+#    restart: always
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - 9090:9090
+    networks:
+      - monitoring
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - 3000:3000
+    networks:
+      - monitoring
+    depends_on:
+      - prometheus
+    restart: always
+
+networks:
+  monitoring:
+    driver: bridge
