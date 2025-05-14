@@ -1,6 +1,8 @@
 package fiap.tds.dental.insurance.api.controller;
 
 import fiap.tds.dental.insurance.api.dto.PacienteDTO;
+import fiap.tds.dental.insurance.api.exception.ItemDuplicadoException;
+import fiap.tds.dental.insurance.api.exception.ItemNotFoundException;
 import fiap.tds.dental.insurance.api.service.PacienteService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -46,7 +48,7 @@ public class PacienteController {
             pacienteService.salvarPaciente(pacienteDTO);
         } catch (RuntimeException e) {
             log.info("Erro: " + e.getMessage());
-            model.addAttribute("erro", e.getMessage());
+            model.addAttribute("erroUnico", e.getMessage());
             return "pacientes/formulario";
         }
 
@@ -64,5 +66,17 @@ public class PacienteController {
     public String deletarPaciente(@PathVariable Long id, Model model) {
         pacienteService.deleteById(id);
         return "redirect:/pacientes";
+    }
+
+    @ExceptionHandler(ItemNotFoundException.class)
+    public String handleItemNotFound(ItemNotFoundException ex, Model model) {
+        model.addAttribute("erroUnico", ex.getMessage());
+        return "atendimentos/formulario";
+    }
+
+    @ExceptionHandler(ItemDuplicadoException.class)
+    public String handleItemDuplicado(ItemDuplicadoException ex, Model model) {
+        model.addAttribute("erroUnico", ex.getMessage());
+        return "clinicas/formulario";
     }
 }

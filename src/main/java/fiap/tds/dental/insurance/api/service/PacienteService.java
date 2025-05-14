@@ -5,13 +5,13 @@ import fiap.tds.dental.insurance.api.entity.Clinica;
 import fiap.tds.dental.insurance.api.entity.Endereco;
 import fiap.tds.dental.insurance.api.entity.Paciente;
 import fiap.tds.dental.insurance.api.entity.Telefone;
+import fiap.tds.dental.insurance.api.exception.ItemDuplicadoException;
+import fiap.tds.dental.insurance.api.exception.ItemNotFoundException;
 import fiap.tds.dental.insurance.api.repository.ClinicaRepository;
 import fiap.tds.dental.insurance.api.repository.PacienteRepository;
 import fiap.tds.dental.insurance.api.service.metrics.PacienteMetricsService;
-import io.micrometer.core.annotation.Timed;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,14 +41,14 @@ public class PacienteService {
                 paciente = new Paciente();
 
                 if (pacienteRepository.existsByCpf(pacienteDTO.getCpf())) {
-                    throw new RuntimeException("Já existe um paciente com esse CPF");
+                    throw new ItemDuplicadoException("Já existe um paciente com esse CPF");
                 }
             } else {
                 paciente = pacienteRepository.findById(pacienteDTO.getId())
-                        .orElseThrow(() -> new RuntimeException("Paciente não encontrado"));
+                        .orElseThrow(() -> new ItemNotFoundException("Paciente não encontrado"));
 
                 if (!pacienteDTO.getCpf().equals(paciente.getCpf()) && pacienteRepository.existsByCpf(pacienteDTO.getCpf())) {
-                    throw new RuntimeException("Já existe um paciente com este CPF");
+                    throw new ItemDuplicadoException("Já existe um paciente com este CPF");
                 }
             }
 
@@ -59,7 +59,7 @@ public class PacienteService {
 
             if (pacienteDTO.getClinicaCnpj() != null) {
                 Clinica clinica = clinicaRepository.findByCnpj(pacienteDTO.getClinicaCnpj())
-                        .orElseThrow(() -> new RuntimeException("Clinica não encontrada com cnpj: " + pacienteDTO.getClinicaCnpj()));
+                        .orElseThrow(() -> new ItemNotFoundException("Clinica não encontrada com cnpj: " + pacienteDTO.getClinicaCnpj()));
                 paciente.setClinica(clinica);
             }
 
