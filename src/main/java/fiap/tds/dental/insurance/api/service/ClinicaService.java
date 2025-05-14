@@ -61,57 +61,6 @@ public class ClinicaService {
     }
 
 
-    public ClinicaDTO editarClinica(ClinicaDTO clinicaDTO) {
-        if (clinicaDTO.getNome() == null || clinicaDTO.getNome().isEmpty()) {
-            throw new RuntimeException("O nome não pode ser nulo ou vazio");
-        }
-
-        Clinica clinica = clinicaRepository.findById(clinicaDTO.getId())
-                .orElseThrow(() -> new RuntimeException("Clínica não encontrada"));
-
-        if (!clinicaDTO.getCnpj().equals(clinica.getCnpj())) {
-            if (clinicaRepository.existsByCnpj(clinicaDTO.getCnpj())) {
-                throw new RuntimeException("Já existe uma clínica com esse novo CNPJ");
-            }
-            clinica.setCnpj(clinicaDTO.getCnpj());
-        }
-
-        clinica.setNome(clinicaDTO.getNome());
-
-        Endereco endereco = enderecoService.toEntity(clinicaDTO.getEndereco());
-        Telefone telefone = telefoneService.toEntity(clinicaDTO.getTelefone());
-        Usuario usuario = usuarioService.toEntity(clinicaDTO.getUsuario());
-
-        clinica.setEndereco(endereco);
-        clinica.setTelefone(telefone);
-        clinica.setUsuario(usuario);
-
-        clinica = clinicaRepository.save(clinica);
-
-        return toDto(clinica);
-    }
-
-    private void attEndereco(Endereco endereco, EnderecoDTO enderecoDTO) {
-        endereco.setRua(enderecoDTO.getRua());
-        endereco.setNumero(enderecoDTO.getNumero());
-        endereco.setCep(enderecoDTO.getCep());
-        endereco.setBairro(enderecoDTO.getBairro());
-        endereco.setCidade(enderecoDTO.getCidade());
-        endereco.setEstado(enderecoDTO.getEstado());
-        endereco.setComplemento(enderecoDTO.getComplemento());
-    }
-
-    private void attUsuario(Usuario usuario, UsuarioDTO usuarioDTO) {
-        usuario.setEmail(usuarioDTO.getEmail());
-        usuario.setSenha(usuarioDTO.getSenha());
-        usuario.setStatus(usuarioDTO.getStatus());
-    }
-
-    private void attTelefone(Telefone telefone, TelefoneDTO telefoneDTO) {
-        telefone.setTipo(telefoneDTO.getTipo());
-        telefone.setNumero(telefoneDTO.getNumero());
-    }
-
     public List<ClinicaDTO> findAll() {
         List<Clinica> list = clinicaRepository.findAll();
         List<ClinicaDTO> dtos = list.stream().map(this::toDto).toList();
@@ -131,17 +80,17 @@ public class ClinicaService {
         throw new RuntimeException("id não encontrado");
     }
 
-    private Clinica toEntity(ClinicaDTO clinicaDTO) {
-        Clinica clinica = new Clinica();
-        clinica.setId(clinicaDTO.getId());
-        clinica.setCnpj(clinicaDTO.getCnpj());
-        clinica.setNome(clinicaDTO.getNome());
-
-        clinica.setEndereco(enderecoService.toEntity(clinicaDTO.getEndereco()));
-        clinica.setUsuario(usuarioService.toEntity(clinicaDTO.getUsuario()));
-        clinica.setTelefone(telefoneService.toEntity(clinicaDTO.getTelefone()));
-        return clinica;
-    }
+//    private Clinica toEntity(ClinicaDTO clinicaDTO) {
+//        Clinica clinica = new Clinica();
+//        clinica.setId(clinicaDTO.getId());
+//        clinica.setCnpj(clinicaDTO.getCnpj());
+//        clinica.setNome(clinicaDTO.getNome());
+//
+//        clinica.setEndereco(enderecoService.toEntity(clinicaDTO.getEndereco()));
+//        clinica.setUsuario(usuarioService.toEntity(clinicaDTO.getUsuario()));
+//        clinica.setTelefone(telefoneService.toEntity(clinicaDTO.getTelefone()));
+//        return clinica;
+//    }
 
     private ClinicaDTO toDto(Clinica clinica) {
         ClinicaDTO clinicaDTO = new ClinicaDTO();
