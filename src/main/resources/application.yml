@@ -7,13 +7,17 @@ server:
 
 management:
   endpoints:
+    health:
+      show-details: always
     web:
       exposure:
         include: health,info,prometheus
-    prometheus:
-      enabled: true
-    health:
-      show-details: always
+      endpoint:
+        prometheus:
+          enabled: true
+  metrics:
+    enable:
+      all: true
 
 spring:
   application:

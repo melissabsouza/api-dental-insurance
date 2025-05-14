@@ -26,6 +26,7 @@ public class AtendimentoService {
     @Autowired
     private DentistaRepository dentistaRepository;
 
+
     public AtendimentoDTO salvarAtendimento(AtendimentoDTO atendimentoDTO) {
         Atendimento atendimento;
 

@@ -9,6 +9,7 @@ import fiap.tds.dental.insurance.api.entity.Endereco;
 import fiap.tds.dental.insurance.api.entity.Telefone;
 import fiap.tds.dental.insurance.api.entity.Usuario;
 import fiap.tds.dental.insurance.api.repository.ClinicaRepository;
+import io.micrometer.core.annotation.Counted;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ public class ClinicaService {
     private final TelefoneService telefoneService;
     private final UsuarioService usuarioService;
 
+    @Counted(value = "numero.clinicas.salvas", description = "Número de vezes que uma clínica foi salva")
     public ClinicaDTO salvarClinica(ClinicaDTO clinicaDTO) {
         Clinica clinica;
 
