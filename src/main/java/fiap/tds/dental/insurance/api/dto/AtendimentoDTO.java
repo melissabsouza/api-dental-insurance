@@ -1,5 +1,6 @@
 package fiap.tds.dental.insurance.api.dto;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
@@ -32,12 +33,14 @@ public class AtendimentoDTO {
     @NotNull(message = "Cpf não pode ser nulo")
     @Pattern(regexp = "^\\d{3}\\.?\\d{3}\\.?\\d{3}-?\\d{2}$",
             message = "Formato de CPF inválido, use 12345678900")
+    @Valid
     private String pacienteCpf;
 
     @NotBlank(message = "Cpf é obrigatório")
     @NotNull(message = "Cpf não pode ser nulo")
     @Pattern(regexp = "^\\d{3}\\.?\\d{3}\\.?\\d{3}-?\\d{2}$",
             message = "Formato de CPF inválido, use 12345678900")
+    @Valid
     private String dentistaCpf;
 
 }

@@ -1,6 +1,7 @@
 package fiap.tds.dental.insurance.api.controller;
 
 import fiap.tds.dental.insurance.api.dto.AtendimentoDTO;
+import fiap.tds.dental.insurance.api.exception.ItemNotFoundException;
 import fiap.tds.dental.insurance.api.service.AtendimentoService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -47,7 +48,7 @@ public class AtendimentoController {
             atendimentoService.salvarAtendimento(atendimentoDTO);
         } catch (RuntimeException e) {
             log.info("Erro: " + e.getMessage());
-            model.addAttribute("erro", e.getMessage());
+            model.addAttribute("erroUnico", e.getMessage());
             return "atendimentos/formulario";
         }
 
@@ -65,5 +66,11 @@ public class AtendimentoController {
     public String deletarAtendimento(@PathVariable Long id, Model model) {
         atendimentoService.deleteById(id);
         return "redirect:/atendimentos";
+    }
+
+    @ExceptionHandler(ItemNotFoundException.class)
+    public String handleItemNotFound(ItemNotFoundException ex, Model model) {
+        model.addAttribute("erroUnico", ex.getMessage());
+        return "atendimentos/formulario";
     }
 }

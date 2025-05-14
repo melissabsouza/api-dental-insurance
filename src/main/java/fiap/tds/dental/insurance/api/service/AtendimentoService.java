@@ -4,6 +4,7 @@ import fiap.tds.dental.insurance.api.dto.AtendimentoDTO;
 import fiap.tds.dental.insurance.api.entity.Atendimento;
 import fiap.tds.dental.insurance.api.entity.Dentista;
 import fiap.tds.dental.insurance.api.entity.Paciente;
+import fiap.tds.dental.insurance.api.exception.ItemNotFoundException;
 import fiap.tds.dental.insurance.api.repository.AtendimentoRepository;
 import fiap.tds.dental.insurance.api.repository.DentistaRepository;
 import fiap.tds.dental.insurance.api.repository.PacienteRepository;
@@ -51,13 +52,13 @@ public class AtendimentoService {
             //TODO ver se isso aqui devolve no thymeleaf
             if (atendimentoDTO.getPacienteCpf() != null) {
                 Paciente paciente = pacienteRepository.findByCpf(atendimentoDTO.getPacienteCpf())
-                        .orElseThrow(() -> new RuntimeException("paciente não encontrado com cpf: " + atendimentoDTO.getPacienteCpf()));
+                        .orElseThrow(() -> new ItemNotFoundException("paciente não encontrado com cpf: " + atendimentoDTO.getPacienteCpf()));
                 atendimento.setPaciente(paciente);
             }
 
             if (atendimentoDTO.getDentistaCpf() != null) {
                 Dentista dentista = dentistaRepository.findByCpf(atendimentoDTO.getDentistaCpf())
-                        .orElseThrow(() -> new RuntimeException("dentista não encontrado com cpf: " + atendimentoDTO.getDentistaCpf()));
+                        .orElseThrow(() -> new ItemNotFoundException("dentista não encontrado com cpf: " + atendimentoDTO.getDentistaCpf()));
                 atendimento.setDentista(dentista);
             }
 
