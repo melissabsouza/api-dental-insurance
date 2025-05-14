@@ -8,6 +8,8 @@ import java.util.Optional;
 
 public interface DentistaRepository extends JpaRepository<Dentista, Long> {
     boolean existsByCpf(String cpf);
+    boolean existsByCro(String cro);
+    boolean existsByEmail(String email);
 
     Optional<Dentista> findByCpf(String cpf);
 

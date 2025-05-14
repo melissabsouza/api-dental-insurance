@@ -4,6 +4,8 @@ import fiap.tds.dental.insurance.api.dto.DentistaDTO;
 import fiap.tds.dental.insurance.api.dto.EnderecoDTO;
 import fiap.tds.dental.insurance.api.dto.PacienteDTO;
 import fiap.tds.dental.insurance.api.dto.TelefoneDTO;
+import fiap.tds.dental.insurance.api.exception.ItemDuplicadoException;
+import fiap.tds.dental.insurance.api.exception.ItemNotFoundException;
 import fiap.tds.dental.insurance.api.service.DentistaService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -51,7 +53,7 @@ public class DentistaController {
             dentistaService.salvarDentista(dentistaDTO);
         } catch (RuntimeException e) {
             log.info("Erro: " + e.getMessage());
-            model.addAttribute("erro", e.getMessage());
+            model.addAttribute("erroUnico", e.getMessage());
             return "dentistas/formulario";
         }
 
@@ -69,5 +71,17 @@ public class DentistaController {
     public String deletarDentista(@PathVariable Long id, Model model) {
         dentistaService.deleteById(id);
         return "redirect:/dentistas";
+    }
+
+    @ExceptionHandler(ItemNotFoundException.class)
+    public String handleItemNotFound(ItemNotFoundException ex, Model model) {
+        model.addAttribute("erroUnico", ex.getMessage());
+        return "atendimentos/formulario";
+    }
+
+    @ExceptionHandler(ItemDuplicadoException.class)
+    public String handleItemDuplicado(ItemDuplicadoException ex, Model model) {
+        model.addAttribute("erroUnico", ex.getMessage());
+        return "clinicas/formulario";
     }
 }

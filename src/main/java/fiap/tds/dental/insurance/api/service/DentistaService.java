@@ -2,6 +2,8 @@ package fiap.tds.dental.insurance.api.service;
 
 import fiap.tds.dental.insurance.api.dto.DentistaDTO;
 import fiap.tds.dental.insurance.api.entity.*;
+import fiap.tds.dental.insurance.api.exception.ItemDuplicadoException;
+import fiap.tds.dental.insurance.api.exception.ItemNotFoundException;
 import fiap.tds.dental.insurance.api.repository.ClinicaRepository;
 import fiap.tds.dental.insurance.api.repository.DentistaRepository;
 import fiap.tds.dental.insurance.api.service.metrics.DentistaMetricsService;
@@ -35,14 +37,26 @@ public class DentistaService {
                 dentista = new Dentista();
 
                 if (dentistaRepository.existsByCpf(dentistaDTO.getCpf())) {
-                    throw new RuntimeException("Já existe um dentista com esse CPF");
+                    throw new ItemDuplicadoException("Já existe um dentista com esse CPF");
+                }
+                if (dentistaRepository.existsByCro(dentistaDTO.getCro())) {
+                    throw new ItemDuplicadoException("Já existe um dentista com esse Cro");
+                }
+                if (dentistaRepository.existsByEmail(dentistaDTO.getEmail())) {
+                    throw new ItemDuplicadoException("Já existe um dentista com esse Email");
                 }
             } else {
                 dentista = dentistaRepository.findById(dentistaDTO.getId())
-                        .orElseThrow(() -> new RuntimeException("Dentista não encontrado"));
+                        .orElseThrow(() -> new ItemNotFoundException("Dentista não encontrado"));
 
                 if (!dentista.getCpf().equals(dentistaDTO.getCpf())) {
-                    throw new RuntimeException("Já existe um dentista com este CPF");
+                    throw new ItemDuplicadoException("Já existe um dentista com este CPF");
+                }
+                if (!dentista.getCro().equals(dentistaDTO.getCro())) {
+                    throw new ItemDuplicadoException("Já existe um dentista com este CRO");
+                }
+                if (!dentista.getEmail().equals(dentistaDTO.getEmail())) {
+                    throw new ItemDuplicadoException("Já existe um dentista com este Email");
                 }
             }
 
@@ -55,7 +69,7 @@ public class DentistaService {
 
             if (dentistaDTO.getClinicaCnpj() != null) {
                 Clinica clinica = clinicaRepository.findByCnpj(dentistaDTO.getClinicaCnpj())
-                        .orElseThrow(() -> new RuntimeException("Clinica não encontrada com cnpj: " + dentistaDTO.getClinicaCnpj()));
+                        .orElseThrow(() -> new ItemNotFoundException("Clinica não encontrada com cnpj: " + dentistaDTO.getClinicaCnpj()));
                 dentista.setClinica(clinica);
             }
 

@@ -38,7 +38,7 @@ public class Dentista {
     @NotBlank(message = "CRO é obrigatório")
     @NotNull(message = "CRO não pode ser nulo")
     @Size(min = 5, message = "CRO deve ter pelo menos 5 caracteres")
-    @Column(name = "cro_dentista", length = 100, nullable = false)
+    @Column(name = "cro_dentista", unique = true, length = 100, nullable = false)
     private String cro;
 
     @NotBlank(message = "Especialidade é obrigatória")
@@ -48,7 +48,7 @@ public class Dentista {
     private String especialidade;
 
     @NotBlank(message = "O email é obrigatório")
-    @Column(name = "email_dentista", length = 100, nullable = false)
+    @Column(name = "email_dentista", length = 100, unique = true, nullable = false)
     private String email;
 
     @NotNull(message = "Data não pode ser nula")
