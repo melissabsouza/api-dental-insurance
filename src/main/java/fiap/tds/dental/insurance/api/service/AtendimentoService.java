@@ -7,6 +7,7 @@ import fiap.tds.dental.insurance.api.entity.Paciente;
 import fiap.tds.dental.insurance.api.repository.AtendimentoRepository;
 import fiap.tds.dental.insurance.api.repository.DentistaRepository;
 import fiap.tds.dental.insurance.api.repository.PacienteRepository;
+import fiap.tds.dental.insurance.api.service.metrics.AtendimentoMetricsService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,37 +27,43 @@ public class AtendimentoService {
     @Autowired
     private DentistaRepository dentistaRepository;
 
+    @Autowired
+    private AtendimentoMetricsService atendimentoMetrics;
+
 
     public AtendimentoDTO salvarAtendimento(AtendimentoDTO atendimentoDTO) {
-        Atendimento atendimento;
+        return atendimentoMetrics.tempoSalvarAtendimento().record(() -> {
+            Atendimento atendimento;
 
-        if (atendimentoDTO.getId() == null) {
-            atendimento = new Atendimento();
-        } else {
-            atendimento = atendimentoRepository.findById(atendimentoDTO.getId())
-                    .orElseThrow(() -> new RuntimeException("Atendimento não encontrado"));
+            if (atendimentoDTO.getId() == null) {
+                atendimento = new Atendimento();
+            } else {
+                atendimento = atendimentoRepository.findById(atendimentoDTO.getId())
+                        .orElseThrow(() -> new RuntimeException("Atendimento não encontrado"));
 
-        }
+            }
 
-        atendimento.setDataAtendimento(atendimentoDTO.getDataAtendimento());
-        atendimento.setDescricao(atendimentoDTO.getDescricao());
-        atendimento.setTipoProcedimento(atendimentoDTO.getTipoProcedimento());
-        atendimento.setCustoEstimado(atendimentoDTO.getCustoEstimado());
+            atendimento.setDataAtendimento(atendimentoDTO.getDataAtendimento());
+            atendimento.setDescricao(atendimentoDTO.getDescricao());
+            atendimento.setTipoProcedimento(atendimentoDTO.getTipoProcedimento());
+            atendimento.setCustoEstimado(atendimentoDTO.getCustoEstimado());
 
-        if (atendimentoDTO.getPacienteCpf() == null) {
-            Paciente paciente = pacienteRepository.findByCpf(atendimentoDTO.getPacienteCpf())
-                    .orElseThrow(() -> new RuntimeException("paciente não encontrado com cpf: " + atendimentoDTO.getPacienteCpf()));
-            atendimento.setPaciente(paciente);
-        }
+            if (atendimentoDTO.getPacienteCpf() == null) {
+                Paciente paciente = pacienteRepository.findByCpf(atendimentoDTO.getPacienteCpf())
+                        .orElseThrow(() -> new RuntimeException("paciente não encontrado com cpf: " + atendimentoDTO.getPacienteCpf()));
+                atendimento.setPaciente(paciente);
+            }
 
-        if (atendimentoDTO.getDentistaCpf() == null) {
-            Dentista dentista = dentistaRepository.findByCpf(atendimentoDTO.getDentistaCpf())
-                    .orElseThrow(() -> new RuntimeException("dentista não encontrado com cpf: " + atendimentoDTO.getDentistaCpf()));
-            atendimento.setDentista(dentista);
-        }
+            if (atendimentoDTO.getDentistaCpf() == null) {
+                Dentista dentista = dentistaRepository.findByCpf(atendimentoDTO.getDentistaCpf())
+                        .orElseThrow(() -> new RuntimeException("dentista não encontrado com cpf: " + atendimentoDTO.getDentistaCpf()));
+                atendimento.setDentista(dentista);
+            }
 
-        atendimento = atendimentoRepository.save(atendimento);
-        return toDto(atendimento);
+            atendimento = atendimentoRepository.save(atendimento);
+            atendimentoMetrics.contarRegistroAtendimento();
+            return toDto(atendimento);
+        });
     }
 
     public List<AtendimentoDTO> findAll() {
