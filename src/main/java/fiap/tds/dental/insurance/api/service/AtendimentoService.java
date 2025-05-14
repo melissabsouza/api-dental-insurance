@@ -48,13 +48,13 @@ public class AtendimentoService {
             atendimento.setTipoProcedimento(atendimentoDTO.getTipoProcedimento());
             atendimento.setCustoEstimado(atendimentoDTO.getCustoEstimado());
 
-            if (atendimentoDTO.getPacienteCpf() == null) {
+            if (atendimentoDTO.getPacienteCpf() != null) {
                 Paciente paciente = pacienteRepository.findByCpf(atendimentoDTO.getPacienteCpf())
                         .orElseThrow(() -> new RuntimeException("paciente não encontrado com cpf: " + atendimentoDTO.getPacienteCpf()));
                 atendimento.setPaciente(paciente);
             }
 
-            if (atendimentoDTO.getDentistaCpf() == null) {
+            if (atendimentoDTO.getDentistaCpf() != null) {
                 Dentista dentista = dentistaRepository.findByCpf(atendimentoDTO.getDentistaCpf())
                         .orElseThrow(() -> new RuntimeException("dentista não encontrado com cpf: " + atendimentoDTO.getDentistaCpf()));
                 atendimento.setDentista(dentista);
