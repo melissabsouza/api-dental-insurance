@@ -24,7 +24,7 @@ public class Clinica {
             message = "Use 00.000.000/0000-00 or 00000000000000")
     private String cnpj;
 
-    @Size(min = 3, message = "O nome deve ter pelo menos 5 caracteres")
+    @Size(min = 3, message = "O nome deve ter pelo menos 3 caracteres")
     @NotBlank(message = "O nome não pode ser vazio")
     @NotNull(message = "O nome não pode ser nulo")
     @Column(name = "nome_clinica", length = 100, nullable = false)

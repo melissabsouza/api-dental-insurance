@@ -8,7 +8,9 @@ import fiap.tds.dental.insurance.api.entity.Clinica;
 import fiap.tds.dental.insurance.api.entity.Endereco;
 import fiap.tds.dental.insurance.api.entity.Telefone;
 import fiap.tds.dental.insurance.api.entity.Usuario;
+import fiap.tds.dental.insurance.api.exception.ItemDuplicadoException;
 import fiap.tds.dental.insurance.api.repository.ClinicaRepository;
+import fiap.tds.dental.insurance.api.repository.UsuarioRepository;
 import fiap.tds.dental.insurance.api.service.metrics.ClinicaMetricsService;
 import fiap.tds.dental.insurance.api.service.metrics.PacienteMetricsService;
 import io.micrometer.core.annotation.Counted;
@@ -24,6 +26,7 @@ import java.util.Optional;
 public class ClinicaService {
     @Autowired
     private ClinicaRepository clinicaRepository;
+    private UsuarioRepository usuarioRepository;
     private final EnderecoService enderecoService;
     private final TelefoneService telefoneService;
     private final UsuarioService usuarioService;
@@ -39,14 +42,22 @@ public class ClinicaService {
                 clinica = new Clinica();
 
                 if (clinicaRepository.existsByCnpj(clinicaDTO.getCnpj())) {
-                    throw new RuntimeException("Já existe uma clínica com esse CNPJ");
+                    throw new ItemDuplicadoException("Já existe uma clínica com esse CNPJ");
+                }
+                if (usuarioRepository.existsByEmail(clinicaDTO.getUsuario().getEmail())) {
+                    throw new ItemDuplicadoException("Já existe uma clínica com esse e-mail");
                 }
             } else {
                 clinica = clinicaRepository.findById(clinicaDTO.getId())
                         .orElseThrow(() -> new RuntimeException("Clínica não encontrada"));
 
                 if (!clinicaDTO.getCnpj().equals(clinica.getCnpj()) && clinicaRepository.existsByCnpj(clinicaDTO.getCnpj())) {
-                    throw new RuntimeException("Já existe uma clínica com esse CNPJ");
+                    throw new ItemDuplicadoException("Já existe uma clínica com esse CNPJ");
+                }
+
+                if (!clinicaDTO.getUsuario().getEmail().equals(clinica.getUsuario().getEmail()) &&
+                        usuarioRepository.existsByEmail(clinicaDTO.getUsuario().getEmail())) {
+                    throw new ItemDuplicadoException("Já existe uma clínica com esse e-mail");
                 }
             }
 

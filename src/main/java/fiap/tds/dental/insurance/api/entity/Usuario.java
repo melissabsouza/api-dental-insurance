@@ -19,7 +19,7 @@ public class Usuario {
     private Long id;
 
     @NotBlank(message = "O email é obrigatório")
-    @Column(name = "email_usuario", length = 100, nullable = false)
+    @Column(name = "email_usuario", unique = true, length = 100, nullable = false)
     private String email;
 
     @Size(min = 5, message = "A senha deve ter pelo menos 5 caracteres")

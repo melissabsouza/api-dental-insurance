@@ -1,5 +1,6 @@
 package fiap.tds.dental.insurance.api.dto;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -15,17 +16,20 @@ public class ClinicaDTO {
             message = "Use 00.000.000/0000-00 or 00000000000000")
     private String cnpj;
 
-    @Size(min = 3, message = "O nome deve ter pelo menos 5 caracteres")
+    @Size(min = 3, message = "O nome deve ter pelo menos 3 caracteres")
     @NotBlank(message = "O nome não pode ser vazio")
     @NotNull(message = "O nome não pode ser nulo")
     private String nome;
 
     @NotNull(message = "O id do usuário não pode ser nulo")
+    @Valid
     private UsuarioDTO usuario;
 
     @NotNull(message = "O id do endereço não pode ser nulo")
+    @Valid
     private EnderecoDTO endereco;
 
     @NotNull(message = "O id do telefone não pode ser nulo")
+    @Valid
     private TelefoneDTO telefone;
 }

@@ -48,6 +48,7 @@ public class AtendimentoService {
             atendimento.setTipoProcedimento(atendimentoDTO.getTipoProcedimento());
             atendimento.setCustoEstimado(atendimentoDTO.getCustoEstimado());
 
+            //TODO ver se isso aqui devolve no thymeleaf
             if (atendimentoDTO.getPacienteCpf() != null) {
                 Paciente paciente = pacienteRepository.findByCpf(atendimentoDTO.getPacienteCpf())
                         .orElseThrow(() -> new RuntimeException("paciente não encontrado com cpf: " + atendimentoDTO.getPacienteCpf()));

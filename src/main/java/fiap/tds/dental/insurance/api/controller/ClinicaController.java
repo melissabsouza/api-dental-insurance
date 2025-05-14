@@ -4,6 +4,7 @@ import fiap.tds.dental.insurance.api.dto.ClinicaDTO;
 import fiap.tds.dental.insurance.api.dto.EnderecoDTO;
 import fiap.tds.dental.insurance.api.dto.TelefoneDTO;
 import fiap.tds.dental.insurance.api.dto.UsuarioDTO;
+import fiap.tds.dental.insurance.api.exception.ItemDuplicadoException;
 import fiap.tds.dental.insurance.api.service.ClinicaService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -56,7 +57,7 @@ public class ClinicaController {
             clinicaService.salvarClinica(clinicaDTO);
         } catch (RuntimeException e) {
             log.info("Erro: " + e.getMessage());
-            model.addAttribute("erro", e.getMessage());
+            model.addAttribute("erroUnico", e.getMessage());
             return "clinicas/formulario";
         }
 
@@ -74,5 +75,11 @@ public class ClinicaController {
     public String deletarClinica(@PathVariable Long id, Model model) {
         clinicaService.deleteById(id);
         return "redirect:/clinicas";
+    }
+
+    @ExceptionHandler(ItemDuplicadoException.class)
+    public String handleItemDuplicado(ItemDuplicadoException ex, Model model) {
+        model.addAttribute("erroUnico", ex.getMessage());
+        return "clinicas/formulario";
     }
 }
