@@ -9,6 +9,8 @@ import fiap.tds.dental.insurance.api.entity.Endereco;
 import fiap.tds.dental.insurance.api.entity.Telefone;
 import fiap.tds.dental.insurance.api.entity.Usuario;
 import fiap.tds.dental.insurance.api.repository.ClinicaRepository;
+import fiap.tds.dental.insurance.api.service.metrics.ClinicaMetricsService;
+import fiap.tds.dental.insurance.api.service.metrics.PacienteMetricsService;
 import io.micrometer.core.annotation.Counted;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,38 +28,43 @@ public class ClinicaService {
     private final TelefoneService telefoneService;
     private final UsuarioService usuarioService;
 
-    @Counted(value = "numero.clinicas.salvas", description = "Número de vezes que uma clínica foi salva")
+    @Autowired
+    private ClinicaMetricsService clinicaMetrics;
+
     public ClinicaDTO salvarClinica(ClinicaDTO clinicaDTO) {
-        Clinica clinica;
+        return clinicaMetrics.tempoSalvarClinica().record(() -> {
+            Clinica clinica;
 
-        if (clinicaDTO.getId() == null) {
-            clinica = new Clinica();
+            if (clinicaDTO.getId() == null) {
+                clinica = new Clinica();
 
-            if (clinicaRepository.existsByCnpj(clinicaDTO.getCnpj())) {
-                throw new RuntimeException("Já existe uma clínica com esse CNPJ");
+                if (clinicaRepository.existsByCnpj(clinicaDTO.getCnpj())) {
+                    throw new RuntimeException("Já existe uma clínica com esse CNPJ");
+                }
+            } else {
+                clinica = clinicaRepository.findById(clinicaDTO.getId())
+                        .orElseThrow(() -> new RuntimeException("Clínica não encontrada"));
+
+                if (!clinicaDTO.getCnpj().equals(clinica.getCnpj()) && clinicaRepository.existsByCnpj(clinicaDTO.getCnpj())) {
+                    throw new RuntimeException("Já existe uma clínica com esse CNPJ");
+                }
             }
-        } else {
-            clinica = clinicaRepository.findById(clinicaDTO.getId())
-                    .orElseThrow(() -> new RuntimeException("Clínica não encontrada"));
 
-            if (!clinicaDTO.getCnpj().equals(clinica.getCnpj()) && clinicaRepository.existsByCnpj(clinicaDTO.getCnpj())) {
-                throw new RuntimeException("Já existe uma clínica com esse CNPJ");
-            }
-        }
+            clinica.setCnpj(clinicaDTO.getCnpj());
+            clinica.setNome(clinicaDTO.getNome());
 
-        clinica.setCnpj(clinicaDTO.getCnpj());
-        clinica.setNome(clinicaDTO.getNome());
+            Endereco endereco = enderecoService.toEntity(clinicaDTO.getEndereco());
+            Telefone telefone = telefoneService.toEntity(clinicaDTO.getTelefone());
+            Usuario usuario = usuarioService.toEntity(clinicaDTO.getUsuario());
 
-        Endereco endereco = enderecoService.toEntity(clinicaDTO.getEndereco());
-        Telefone telefone = telefoneService.toEntity(clinicaDTO.getTelefone());
-        Usuario usuario = usuarioService.toEntity(clinicaDTO.getUsuario());
+            clinica.setEndereco(endereco);
+            clinica.setTelefone(telefone);
+            clinica.setUsuario(usuario);
 
-        clinica.setEndereco(endereco);
-        clinica.setTelefone(telefone);
-        clinica.setUsuario(usuario);
-
-        clinica = clinicaRepository.save(clinica);
-        return toDto(clinica);
+            clinica = clinicaRepository.save(clinica);
+            clinicaMetrics.contarRegistroClinica();
+            return toDto(clinica);
+        });
     }
 
 
