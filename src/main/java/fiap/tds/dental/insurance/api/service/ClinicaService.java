@@ -1,9 +1,6 @@
 package fiap.tds.dental.insurance.api.service;
 
 import fiap.tds.dental.insurance.api.dto.ClinicaDTO;
-import fiap.tds.dental.insurance.api.dto.EnderecoDTO;
-import fiap.tds.dental.insurance.api.dto.TelefoneDTO;
-import fiap.tds.dental.insurance.api.dto.UsuarioDTO;
 import fiap.tds.dental.insurance.api.entity.Clinica;
 import fiap.tds.dental.insurance.api.entity.Endereco;
 import fiap.tds.dental.insurance.api.entity.Telefone;
@@ -12,8 +9,6 @@ import fiap.tds.dental.insurance.api.exception.ItemDuplicadoException;
 import fiap.tds.dental.insurance.api.repository.ClinicaRepository;
 import fiap.tds.dental.insurance.api.repository.UsuarioRepository;
 import fiap.tds.dental.insurance.api.service.metrics.ClinicaMetricsService;
-import fiap.tds.dental.insurance.api.service.metrics.PacienteMetricsService;
-import io.micrometer.core.annotation.Counted;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

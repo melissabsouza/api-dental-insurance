@@ -12,6 +12,6 @@ public class ErrorController {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String handleRecursoNaoEncontradoException(Exception ex, Model model) {
         model.addAttribute("mensagem", ex.getMessage());
-        return "error"; // Nome da página de erro Thymeleaf (src/main/resources/templates/error.html)
+        return "error";
     }
 }

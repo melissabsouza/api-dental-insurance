@@ -1,7 +1,6 @@
 package fiap.tds.dental.insurance.api.dto;
 
 import fiap.tds.dental.insurance.api.enums.TipoGenero;
-import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.Valid;
@@ -12,7 +11,6 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Data
 public class PacienteDTO {
