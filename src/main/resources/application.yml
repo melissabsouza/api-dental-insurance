@@ -26,6 +26,19 @@ spring:
   thymeleaf:
     cache: false
 
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    mail:
+      host: localhost
+      port: 1025
+      properties:
+        mail:
+          smtp:
+            auth: False
+
   jpa:
     open-in-view: true
     database-platform: org.hibernate.dialect.H2Dialect
