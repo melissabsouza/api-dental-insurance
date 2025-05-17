@@ -23,21 +23,28 @@ spring:
   application:
     name: dental-insurance-api
 
-  thymeleaf:
-    cache: false
-
   rabbitmq:
     host: localhost
     port: 5672
     username: guest
     password: guest
-    mail:
-      host: localhost
-      port: 1025
-      properties:
-        mail:
-          smtp:
-            auth: False
+    queue:
+      email: email.clinica.queue
+    exchange: clinica.exchange
+    routing:
+      key: email.clinica.key
+
+  mail:
+    host: localhost
+    port: 1025
+    username: ""
+    password: ""
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
 
   jpa:
     open-in-view: true

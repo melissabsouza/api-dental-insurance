@@ -10,6 +10,7 @@ import fiap.tds.dental.insurance.api.exception.ItemNotFoundException;
 import fiap.tds.dental.insurance.api.repository.ClinicaRepository;
 import fiap.tds.dental.insurance.api.repository.PacienteRepository;
 import fiap.tds.dental.insurance.api.service.metrics.PacienteMetricsService;
+import fiap.tds.dental.insurance.api.service.mq.PacienteEmailService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,7 @@ public class PacienteService {
 
     private final EnderecoService enderecoService;
     private final TelefoneService telefoneService;
+    private final PacienteEmailService pacienteEmailService;
 
 
     public PacienteDTO salvarPaciente(PacienteDTO pacienteDTO) {
@@ -69,7 +71,9 @@ public class PacienteService {
             paciente.setEndereco(endereco);
             paciente.setTelefone(telefone);
 
-            paciente = pacienteRepository.save(paciente);
+            paciente = pacienteEmailService.cadastrarPaciente(paciente);
+
+//            paciente = pacienteRepository.save(paciente);
             pacienteMetrics.contarRegistroPaciente();
             return toDto(paciente);
         });
