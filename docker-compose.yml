@@ -35,6 +35,21 @@ services:
 #      - prometheus
 #      - grafana
 #    restart: always
+  smtp-server:
+    image: haravich/fake-smtp-server
+    container_name: fake-smtp
+    ports:
+      - "1025:1025"
+      - "1080:1080"
+    restart: unless-stopped
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    restart: unless-stopped
 
   prometheus:
     image: prom/prometheus
