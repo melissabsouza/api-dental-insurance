@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body class="bg-gray-100">
 <!-- Header -->
@@ -13,13 +14,16 @@
         </div>
 
         <div class="flex gap-4 justify-end mb-4">
-            <a href="?lang=pt" class="px-4 py-2 rounded-lg border border-gray-300 text-sm hover:bg-gray-100">
-                🇧🇷 Português
+            <a href="?lang=pt" class="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 text-sm hover:bg-gray-100">
+                <img src="https://flagcdn.com/w40/br.png" alt="Português" width="24" height="18" />
+                Português
             </a>
-            <a href="?lang=en" class="px-4 py-2 rounded-lg border border-gray-300 text-sm hover:bg-gray-100">
-                🇺🇸 English
+            <a href="?lang=en" class="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 text-sm hover:bg-gray-100">
+                <img src="https://flagcdn.com/w40/us.png" alt="English" width="24" height="18" />
+                English
             </a>
         </div>
+
         <nav class="hidden md:flex space-x-6">
             <a th:href="@{/}" class="text-gray-600 hover:text-blue-600">Home</a>
             <a th:href="@{/clinicas}" th:text="#{clinicas.header}"
@@ -29,7 +33,10 @@
             <a th:href="@{/dentistas}" th:text="#{dentistas.header}"
                class="text-gray-600 hover:text-blue-600">Dentistas</a>
             <a th:href="@{/atendimentos}" th:text="#{atendimentos.header}" class="text-gray-600 hover:text-blue-600">Atendimentos</a>
-
+            <a th:href="@{/sinistros}" class="text-gray-600 hover:text-blue-600">Spring AI</a>
+            <a th:href="@{/logout}" class="text-gray-600 hover:text-blue-600">
+                <i data-lucide="log-out"></i>
+            </a>
         </nav>
         <div class="md:hidden">
             <button id="hamburger" class="focus:outline-none">
@@ -47,6 +54,10 @@
         <a th:href="@{/pacientes}" th:text="#{pacientes.header}" class="text-gray-600 hover:text-blue-600">Pacientes</a>
         <a th:href="@{/dentistas}" th:text="#{dentistas.header}" class="text-gray-600 hover:text-blue-600">Dentistas</a>
         <a th:href="@{/atendimentos}" th:text="#{atendimentos.header}" class="text-gray-600 hover:text-blue-600">Atendimentos</a>
+        <a th:href="@{/sinistros}" th:text="#{atendimentos.header}" class="text-gray-600 hover:text-blue-600">Spring AI</a>
+        <a th:href="@{/logout}" class="text-gray-600 hover:text-blue-600">
+            <i data-lucide="log-out"></i>
+        </a>
     </nav>
 </header>
 
