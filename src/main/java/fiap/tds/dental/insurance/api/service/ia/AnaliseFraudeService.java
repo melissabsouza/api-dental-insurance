@@ -29,7 +29,7 @@ public class AnaliseFraudeService {
             - Mesmos procedimentos várias vezes
             - Custos altos ou repetitivos
 
-            Responda em até 800 caracteres, só um parágrafo curto, sem explicação longa.
+            Responda em até 1000 caracteres, só um parágrafo curto, sem explicação longa.
 
             Histórico:
             """);
