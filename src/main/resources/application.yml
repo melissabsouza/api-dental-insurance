@@ -18,6 +18,9 @@ management:
   metrics:
     enable:
       all: true
+gemini:
+  api:
+    key: AIzaSyDylAD3c3iCUaDH-l0k4NqLacGQ4Yg0ygg
 
 spring:
   application:
