@@ -1,7 +1,6 @@
 package fiap.tds.dental.insurance.api.service.mq;
 
 import fiap.tds.dental.insurance.api.config.RabbitMQConfig;
-import fiap.tds.dental.insurance.api.service.mq.EmailService;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +14,7 @@ public class EmailConsumer {
     }
 
     @RabbitListener(queues = RabbitMQConfig.QUEUE_NAME)
-    public void receberMensagem(EmailPayload  mensagem) {
+    public void receberMensagem(EmailPayload mensagem) {
         System.out.println("📨 Mensagem recebida da fila: " + mensagem);
 
         String emailDestino = mensagem.getTo();

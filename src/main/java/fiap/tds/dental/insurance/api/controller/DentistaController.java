@@ -1,9 +1,6 @@
 package fiap.tds.dental.insurance.api.controller;
 
 import fiap.tds.dental.insurance.api.dto.DentistaDTO;
-import fiap.tds.dental.insurance.api.dto.EnderecoDTO;
-import fiap.tds.dental.insurance.api.dto.PacienteDTO;
-import fiap.tds.dental.insurance.api.dto.TelefoneDTO;
 import fiap.tds.dental.insurance.api.exception.ItemDuplicadoException;
 import fiap.tds.dental.insurance.api.exception.ItemNotFoundException;
 import fiap.tds.dental.insurance.api.service.DentistaService;

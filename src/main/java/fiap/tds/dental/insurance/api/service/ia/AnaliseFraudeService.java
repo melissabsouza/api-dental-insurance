@@ -1,9 +1,6 @@
 package fiap.tds.dental.insurance.api.service.ia;
 
 import fiap.tds.dental.insurance.api.entity.Atendimento;
-import fiap.tds.dental.insurance.api.entity.Sinistro;
-import fiap.tds.dental.insurance.api.repository.AtendimentoRepository;
-import fiap.tds.dental.insurance.api.repository.SinistroRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,22 +14,22 @@ public class AnaliseFraudeService {
 
     public String gerarPromptAnalise(List<Atendimento> atendimentos) {
         StringBuilder prompt = new StringBuilder("""
-            Você é um sistema de detecção de fraudes odontológicas.
-            Analise os atendimentos do paciente abaixo e classifique como:
-            - Legítimo
-            - Suspeito
-            - Fraude Provável
-
-            Considere:
-            - Frequência de atendimentos
-            - Datas próximas ou repetitivas
-            - Mesmos procedimentos várias vezes
-            - Custos altos ou repetitivos
-
-            Responda em até 1000 caracteres, só um parágrafo curto, sem explicação longa.
-
-            Histórico:
-            """);
+                Você é um sistema de detecção de fraudes odontológicas.
+                Analise os atendimentos do paciente abaixo e classifique como:
+                - Legítimo
+                - Suspeito
+                - Fraude Provável
+                
+                Considere:
+                - Frequência de atendimentos
+                - Datas próximas ou repetitivas
+                - Mesmos procedimentos várias vezes
+                - Custos altos ou repetitivos
+                
+                Responda em até 1000 caracteres, só um parágrafo curto, sem explicação longa.
+                
+                Histórico:
+                """);
 
         for (Atendimento atendimento : atendimentos) {
             prompt.append(String.format("Data: %s | Procedimento: %s | Custo: R$ %.2f\n",

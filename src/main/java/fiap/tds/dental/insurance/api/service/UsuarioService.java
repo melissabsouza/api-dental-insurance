@@ -3,7 +3,6 @@ package fiap.tds.dental.insurance.api.service;
 
 import fiap.tds.dental.insurance.api.dto.UsuarioDTO;
 import fiap.tds.dental.insurance.api.entity.Usuario;
-import fiap.tds.dental.insurance.api.enums.StatusUsuario;
 import fiap.tds.dental.insurance.api.repository.UsuarioRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
