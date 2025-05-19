@@ -1,6 +1,5 @@
 package fiap.tds.dental.insurance.api.config;
 
-
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -65,15 +64,6 @@ public class SecurityConfig {
         http.authorizeHttpRequests(requests -> {
             requests.requestMatchers("/actuator/prometheus").permitAll();
             requests.requestMatchers("/**").authenticated();
-
-//            requests.requestMatchers("/tutores", "/tutores/novo", "/tutores/editar/**",
-//                            "/animais", "/animais/novo", "/animais/editar/**")
-//                    .hasRole("USER");
-//
-//            requests.requestMatchers("/**")
-//                    .hasRole("ADMIN");
-
-            requests.anyRequest().denyAll();
         });
 
 

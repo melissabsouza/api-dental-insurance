@@ -20,7 +20,7 @@ management:
       all: true
 gemini:
   api:
-    key: {apikey}
+    key: AIzaSyDylAD3c3iCUaDH-l0k4NqLacGQ4Yg0ygg
 
 spring:
   application:
@@ -29,19 +29,16 @@ spring:
     oauth2:
       client:
         provider:
-          dental-insurance-realm:
+          keycloak-provider:
             issuer-uri: http://localhost:7080/realms/dental-insurance-realm
         registration:
-          keycloak:
-            provider: dental-insurance-realm
+          keycloak-client:
+            provider: keycloak-provider
             authorization-grant-type: authorization_code
             client-id: api-dental
             client-secret: rnYePsaqp6lWn6a1Ddt6peViKcl8Ykqk
             scope: openid
-            #            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             redirect-uri: "http://localhost:8080/login/oauth2/code/keycloak"
-      whitelist:
-        - /actuator/prometheus
 
   rabbitmq:
     host: localhost

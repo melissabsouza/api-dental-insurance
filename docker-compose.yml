@@ -24,20 +24,6 @@ services:
     networks:
       - local_network
 
-#  spring-app:
-#    build:
-#      context: .
-#      dockerfile: ./Dockerfile
-#    ports:
-#      - "8080:8080"
-#    networks:
-#      - monitoring
-#    depends_on:
-#      - keycloak
-#      - prometheus
-#      - grafana
-#    restart: always
-
   smtp-server:
     image: haravich/fake-smtp-server
     container_name: fake-smtp

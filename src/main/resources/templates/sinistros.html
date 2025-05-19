@@ -4,12 +4,13 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Sinistros Analisados</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="p-6 bg-gray-100 min-h-screen">
 
 <div th:insert="~{fragments/header :: header}">
-    MENU NO HEADER
+    <h1>Header Content</h1>
 </div>
 
 <div class="max-w-4xl mx-auto mt-8">
@@ -55,6 +56,11 @@
         </button>
     </form>
 </div>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+    lucide.createIcons();
+</script>
 
 </body>
 </html>

@@ -9,8 +9,9 @@
 <header class="bg-white shadow-md mb-20">
     <div class="container mx-auto px-4 py-4 flex justify-between items-center">
         <div class="text-2xl font-bold text-gray-800">
-            <h1>Dental Insurance</h1>
-
+            <a th:href="@{/logout}" class="text-gray-600 hover:text-blue-600">
+                <i data-lucide="log-out"></i>
+            </a>
         </div>
 
         <div class="flex gap-4 justify-end mb-4">
@@ -34,9 +35,6 @@
                class="text-gray-600 hover:text-blue-600">Dentistas</a>
             <a th:href="@{/atendimentos}" th:text="#{atendimentos.header}" class="text-gray-600 hover:text-blue-600">Atendimentos</a>
             <a th:href="@{/sinistros}" class="text-gray-600 hover:text-blue-600">Spring AI</a>
-            <a th:href="@{/logout}" class="text-gray-600 hover:text-blue-600">
-                <i data-lucide="log-out"></i>
-            </a>
         </nav>
         <div class="md:hidden">
             <button id="hamburger" class="focus:outline-none">
@@ -55,9 +53,6 @@
         <a th:href="@{/dentistas}" th:text="#{dentistas.header}" class="text-gray-600 hover:text-blue-600">Dentistas</a>
         <a th:href="@{/atendimentos}" th:text="#{atendimentos.header}" class="text-gray-600 hover:text-blue-600">Atendimentos</a>
         <a th:href="@{/sinistros}" th:text="#{atendimentos.header}" class="text-gray-600 hover:text-blue-600">Spring AI</a>
-        <a th:href="@{/logout}" class="text-gray-600 hover:text-blue-600">
-            <i data-lucide="log-out"></i>
-        </a>
     </nav>
 </header>
 

@@ -2,6 +2,7 @@ package fiap.tds.dental.insurance.api.service.ia;
 
 import fiap.tds.dental.insurance.api.entity.Atendimento;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class AnaliseFraudeService {
-
+    @Autowired
     private final GeminiService geminiService;
 
     public String gerarPromptAnalise(List<Atendimento> atendimentos) {
