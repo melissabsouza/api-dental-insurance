@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html>
 <head>
     <meta charset="UTF-8">
     <title>Cadastro de Clínicas</title>
@@ -20,7 +18,7 @@
     <div class="flex flex-col items-center mb-6">
         <h2 th:text="#{clinicas.title}" class="text-2xl font-extrabold mb-2 text-blue-700">Cadastro de Pacientes</h2>
         <a th:text="#{clinicas.list}" class="text-sm hover:underline text-blue-700 flex items-center gap-1"
-           th:href="@{/pacientes}">
+           th:href="@{/clinicas}">
             <svg class="w-4 h-4" stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24">
                 <path d="M3 12h18M3 6h18M3 18h18"/>
             </svg>
