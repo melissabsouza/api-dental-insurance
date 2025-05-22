@@ -33,6 +33,7 @@ Endpoints CRUD:
 
 - Aplicação rodando localmente pois deu conflito com o endpoint do keycloak, 
 no docker-compose apenas os containers do grafana, prometheus, rabbitmq, fakesmtp e keycloak.
+STACK: JAVA 21
 
 
 
