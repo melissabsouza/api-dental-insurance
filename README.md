@@ -29,9 +29,12 @@ Endpoints CRUD:
     
 - IA: pra analisar histórico de atendimentos e detectar fraudes.
     
-- Deploy: Containerizado com Docker pra garantir portabilidade e facilidade de implantação.
-    
 - Frontend: Views com Thymeleaf
+
+- Aplicação rodando localmente pois deu conflito com o endpoint do keycloak, 
+no docker-compose apenas os containers do grafana, prometheus, rabbitmq, fakesmtp e keycloak.
+
+
 
 #### Relacionamentos
 
