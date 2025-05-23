@@ -23,7 +23,7 @@ Endpoints CRUD:
 #### Arquitetura final
 - Backend: Spring Boot + Spring Security pra autenticação e autorização.
     
-- Banco de Dados: H2 (in-memory) pra facilitar desenvolvimento e testes rápidos.
+- Banco de Dados: H2 (in-memory) pra facilitar desenvolvimento e testes rápidos. O banco oracle está com problema de identity/sequence, a mudança não foi possível, um ponto a melhorar
     
 - Observabilidade: Micrometer + Prometheus + Grafana pra métricas e monitoramento.
     
